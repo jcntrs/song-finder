@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.js": "/song-finder/static/js/main.b9c11954.chunk.js",
+    "main.js.map": "/song-finder/static/js/main.b9c11954.chunk.js.map",
+    "runtime-main.js": "/song-finder/static/js/runtime-main.3811fcb5.js",
+    "runtime-main.js.map": "/song-finder/static/js/runtime-main.3811fcb5.js.map",
+    "static/js/2.3f9ef58c.chunk.js": "/song-finder/static/js/2.3f9ef58c.chunk.js",
+    "static/js/2.3f9ef58c.chunk.js.map": "/song-finder/static/js/2.3f9ef58c.chunk.js.map",
+    "index.html": "/song-finder/index.html",
+    "precache-manifest.55f87d1c58fdf28adfb93632c9612e65.js": "/song-finder/precache-manifest.55f87d1c58fdf28adfb93632c9612e65.js",
+    "service-worker.js": "/song-finder/service-worker.js",
+    "static/js/2.3f9ef58c.chunk.js.LICENSE.txt": "/song-finder/static/js/2.3f9ef58c.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3811fcb5.js",
+    "static/js/2.3f9ef58c.chunk.js",
+    "static/js/main.b9c11954.chunk.js"
+  ]
+}
