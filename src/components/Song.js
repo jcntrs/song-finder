@@ -23,7 +23,7 @@ const Song = ({ element }) => (
                     </li>
                 </ul>
                 <div className="text-center">
-                    <Link to={`/track/lyric/${element.track_id}`} className="btn btn-outline-danger left-rd30 rigth-rd30"><i className="ti-control-play mr-2 text-color"></i><span className=" white-hover">View Lyric</span></Link>
+                    <Link to={`/track/lyric/${element.track_id}`} className="btn btn-outline-danger left-rd30 rigth-rd30"><i className="ti-control-play mr-2 text-color"></i><span className="white-hover">View Lyric</span></Link>
                 </div>
             </div>
         </div>

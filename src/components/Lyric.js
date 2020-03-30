@@ -23,7 +23,7 @@ const Lyric = props => {
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-12 text-center">
-                            <Link to="/" className="btn btn-danger left-rd30 rigth-rd30" type="button">go back</Link>
+                            <Link to="/" className="btn btn-danger left-rd30 rigth-rd30" type="button"><span className="white-hover">go back</span></Link>
                         </div>
                     </div>
                 </div>
