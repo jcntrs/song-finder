@@ -1,25 +1,40 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import SongContext from '../contexts/songs/SongContext';
 import Song from './Song';
-import credentials from '../credentials.json';
+import swal from 'sweetalert';
 
 const SongsList = () => {
 
     const Context = useContext(SongContext);
-    const { trackList, getSongs } = Context;
+    const { trackList, currentSearch, getSearchTrackTitleFromAPI, getPopularTrackListFromAPI, setCurrentSearch } = Context;
 
-    const { api_key } = credentials;
-    console.log(trackList)
+    const [search, setSearch] = useState('');
 
-    const getData = () => {
-        const URL = `https://cors-anywhere.herokuapp.com/https://api.musixmatch.com/ws/1.1/chart.tracks.get?page=1&page_size=10&country=us&f_has_lyrics=1&apikey=${api_key}`;
-        fetch(URL)
-            .then(response => response.json())
-            .then(data => getSongs(data.message.body.track_list))
+    const handleSearchChange = event => {
+        setSearch(event.target.value.trim());
+    }
+
+    const handleSearchClick = () => {
+        if (search.length > 0) {
+            setCurrentSearch(search);
+        } else {
+            swal({
+                title: "Oops!, we are sorry",
+                text: "The search can't be empty",
+                icon: "warning",
+                button: "I get it!",
+                closeOnClickOutside: false
+            });
+        }
     }
 
     useEffect(() => {
-        getData();
+        currentSearch && getSearchTrackTitleFromAPI();
+        // eslint-disable-next-line
+    }, [currentSearch]);
+
+    useEffect(() => {
+        getPopularTrackListFromAPI();
         // eslint-disable-next-line
     }, []);
 
@@ -30,8 +45,8 @@ const SongsList = () => {
                     <div className="row">
                         <div className="col-lg-12 text-center">
                             <h3 className="text-white mt-2">Get the lyric for any song</h3>
-                            <input className="mb-5 left-rd30" type="text"></input>
-                            <button className="btn btn-outline-danger rigth-rd30" type="button">search</button>
+                            <input className="mb-5 left-rd30" type="text" onChange={handleSearchChange} />
+                            <button className="btn btn-outline-danger rigth-rd30" type="button" onClick={handleSearchClick}>search</button>
                         </div>
                     </div>
                 </div>

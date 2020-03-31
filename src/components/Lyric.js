@@ -5,14 +5,12 @@ import { Link } from 'react-router-dom';
 const Lyric = props => {
 
     const Context = useContext(SongContext);
-    const { lyrics, currentTrack, getLyricFromAPI, getCurrentTrackFromAPI } = Context;
+    const { lyrics, currentTrack, getCurrentLyricFromAPI, getCurrentTrackFromAPI } = Context;
 
     const track_id = props.match.params.track_id;
 
-    console.log(currentTrack)
-
     useEffect(() => {
-        getLyricFromAPI(track_id);
+        getCurrentLyricFromAPI(track_id);
         getCurrentTrackFromAPI(track_id);
         // eslint-disable-next-line
     }, []);
