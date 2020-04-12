@@ -2,7 +2,9 @@ import {
     SET_TRACKLIST,
     SET_CURRENT_LYRIC,
     SET_CURRENT_TRACK,
-    SET_CURRENT_SEARCH
+    SET_CURRENT_SEARCH,
+    SET_LOADING,
+    SET_NOT_FOUND
 } from '../../types/songType';
 
 export default (state, action) => {
@@ -30,6 +32,16 @@ export default (state, action) => {
             return {
                 ...state,
                 currentSearch: action.payload
+            }
+        case SET_LOADING:
+            return {
+                ...state,
+                loading: action.payload
+            }
+        case SET_NOT_FOUND:
+            return {
+                ...state,
+                notFound: action.payload
             }
 
         default:

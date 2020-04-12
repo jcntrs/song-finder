@@ -1,17 +1,22 @@
 import React, { useEffect, useContext } from 'react';
 import SongContext from '../contexts/songs/SongContext';
 import { Link } from 'react-router-dom';
+import Spinner from './Spinner';
 
 const Lyric = props => {
 
     const Context = useContext(SongContext);
-    const { lyrics, currentTrack, getCurrentLyricFromAPI, getCurrentTrackFromAPI } = Context;
+    const { lyrics, currentTrack, loading, getCurrentLyricFromAPI, getCurrentTrackFromAPI, setLoading } = Context;
 
     const track_id = props.match.params.track_id;
 
     useEffect(() => {
+        setLoading(true);
         getCurrentLyricFromAPI(track_id);
         getCurrentTrackFromAPI(track_id);
+        setTimeout(() => {
+            setLoading(false);
+        }, 3000);
         // eslint-disable-next-line
     }, []);
 
@@ -26,28 +31,33 @@ const Lyric = props => {
                     </div>
                 </div>
             </section>
-            <div className="container">
-                <div className="card mt-5">
-                    <div className="card-header card-header-orange">
-                        {currentTrack && <b>{currentTrack.track_name} By {currentTrack.artist_name}</b>}
+            {loading ?
+                <Spinner />
+                :
+                <div className="container">
+                    <div className="card mt-5">
+                        <div className="card-header card-header-orange">
+                            {currentTrack && <b>{currentTrack.track_name} By {currentTrack.artist_name}</b>}
+                        </div>
+                        <div className="card-body">
+                            <p className="card-text">{lyrics.lyrics_body}</p>
+                        </div>
                     </div>
-                    <div className="card-body">
-                        <p className="card-text">{lyrics.lyrics_body}</p>
-                    </div>
+                    <blockquote className="blockquote p-4 bg-white text-black font-italic mb-80 mt-3">
+                        <dl className="row">
+                            <dt className="col-sm-3">Album ID:</dt>
+                            <dd className="col-sm-9">{currentTrack.album_id}</dd>
+                            <dt className="col-sm-3">Album Name:</dt>
+                            <dd className="col-sm-9">{currentTrack.album_name}</dd>
+                            <dt className="col-sm-3">Explicit Worlds:</dt>
+                            <dd className="col-sm-9">{lyrics.explicit === 0 ? 'No' : 'Si'}</dd>
+                            <dt className="col-sm-3">Update Date:</dt>
+                            <dd className="col-sm-9">{lyrics.updated_time && new Date(lyrics.updated_time).toDateString()}</dd>
+                        </dl>
+                    </blockquote>
                 </div>
-                <blockquote className="blockquote p-4 bg-white text-black font-italic mb-80 mt-3">
-                    <dl className="row">
-                        <dt className="col-sm-3">Album ID:</dt>
-                        <dd className="col-sm-9">{currentTrack.album_id}</dd>
-                        <dt className="col-sm-3">Album Name:</dt>
-                        <dd className="col-sm-9">{currentTrack.album_name}</dd>
-                        <dt className="col-sm-3">Explicit Worlds:</dt>
-                        <dd className="col-sm-9">{lyrics.explicit === 0 ? 'No' : 'Si'}</dd>
-                        <dt className="col-sm-3">Update Date:</dt>
-                        <dd className="col-sm-9">{lyrics.updated_time && new Date(lyrics.updated_time).toDateString()}</dd>
-                    </dl>
-                </blockquote>
-            </div>
+            }
+
         </>
     );
 }

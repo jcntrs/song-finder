@@ -2,11 +2,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import SongContext from '../contexts/songs/SongContext';
 import Song from './Song';
 import swal from 'sweetalert';
+import Spinner from './Spinner';
 
 const SongsList = () => {
 
     const Context = useContext(SongContext);
-    const { trackList, currentSearch, getSearchTrackTitleFromAPI, getPopularTrackListFromAPI, setCurrentSearch } = Context;
+    const { trackList, currentSearch, loading, notFound, getSearchTrackTitleFromAPI, getPopularTrackListFromAPI, setCurrentSearch } = Context;
 
     const [search, setSearch] = useState('');
 
@@ -51,23 +52,33 @@ const SongsList = () => {
                     </div>
                 </div>
             </section>
-            <section className="section course">
-                <div className="container">
-                    <div className="row justify-content-center">
-                        <div className="col-lg-8 text-center">
-                            <div className="section-title">
-                                <div className="divider mb-3"></div>
-                                <h2>Popular Songs</h2>
+            {loading ?
+                <Spinner />
+                :
+                <section className="section course">
+                    <div className="container">
+                        <div className="row justify-content-center">
+                            <div className="col-lg-8 text-center">
+                                <div className="section-title">
+                                    <div className="divider mb-3"></div>
+                                    <h2>{currentSearch ? 'Your Search' : 'Popular Songs'}</h2>
+                                </div>
                             </div>
                         </div>
+                        <div className="row">
+                            {notFound ?
+                                <>
+                                    <img className="mx-auto" src="../images/songNotFound.jpg" alt="Song Not Found" height="150" width="150" />
+                                    <h2 className="col-12 text-center">Not Found</h2>
+                                </>
+                                :
+                                trackList.length > 0 &&
+                                trackList.map(element => <Song key={element.track.track_id} element={element.track} />)
+                            }
+                        </div>
                     </div>
-                    <div className="row">
-                        {trackList.length > 0 &&
-                            trackList.map(element => <Song key={element.track.track_id} element={element.track} />)
-                        }
-                    </div>
-                </div>
-            </section>
+                </section>
+            }
         </>
     );
 
